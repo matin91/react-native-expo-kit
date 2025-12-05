@@ -34,17 +34,17 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Home() {
+export function Home() {
   const router = useRouter();
   const { isDark } = useColorScheme();
 
   const { credentials } = useAppSlice();
 
-
   const renderItem = useCallback(
     (item: Credential) => {
       return (
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={() => {
+        }}>
           <View>
             <Text style={{ color: isDark ? colors.gray : colors.black }}>{item.docType}</Text>
             <Text style={{ color: isDark ? colors.gray : colors.black }}>{item.name}</Text>
