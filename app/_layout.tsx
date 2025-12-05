@@ -13,6 +13,7 @@ import { fetchUser } from '@/services';
 import Provider from '@/providers';
 import { colors } from '@/theme';
 import { User } from '@/types';
+import { Credential } from '@/types/Credential';
 
 // keep the splash screen visible while complete fetching resources
 SplashScreen.preventAutoHideAsync();
@@ -20,7 +21,7 @@ SplashScreen.preventAutoHideAsync();
 function Router() {
   const router = useRouter();
   const { isDark } = useColorScheme();
-  const { dispatch, setUser, setLoggedIn } = useAppSlice();
+  const { dispatch, setUser, setLoggedIn, setCredentials } = useAppSlice();
   const { setPersistData, getPersistData } = useDataPersist();
   const [isOpen, setOpen] = useState(false);
 
@@ -38,6 +39,29 @@ function Router() {
         dispatch(setUser(user));
         dispatch(setLoggedIn(!!user));
         if (user) setPersistData<User>(DataPersistKeys.USER, user);
+
+        // Mock credentials and store in redux so Home screen can display them
+        const mockCredentials: Credential[] = [
+          {
+            id: 'cred-1',
+            name: 'Driver License',
+            docType: 'DriverLicense',
+            docNumber: 'D1234567',
+            status: 'verified',
+            expiryDate: '2026-08-01',
+            createdDate: '2021-08-01',
+          },
+          {
+            id: 'cred-2',
+            name: 'Passport',
+            docType: 'Passport',
+            docNumber: 'P9876543',
+            status: 'Pending',
+            expiryDate: '2030-01-01',
+            createdDate: '2020-01-01',
+          },
+        ];
+        dispatch(setCredentials(mockCredentials));
 
         // hide splash screen
         SplashScreen.hideAsync();
@@ -59,7 +83,7 @@ function Router() {
       }
     }
     preload();
-  }, []);
+  }, [dispatch, getPersistData, setLoggedIn, setPersistData, setUser, setCredentials]);
 
   // navigate to app
   useEffect(() => {

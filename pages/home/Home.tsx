@@ -1,8 +1,11 @@
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import useColorScheme from '@/hooks/useColorScheme';
 import Button from '@/components/elements/Button';
 import { useRouter } from 'expo-router';
 import { colors } from '@/theme';
+import React, { useCallback } from 'react';
+import { Credential } from '@/types/Credential';
+import { useAppSlice } from '@/slices';
 
 const styles = StyleSheet.create({
   root: {
@@ -34,9 +37,30 @@ const styles = StyleSheet.create({
 export default function Home() {
   const router = useRouter();
   const { isDark } = useColorScheme();
+
+  const { credentials } = useAppSlice();
+
+
+  const renderItem = useCallback(
+    (item: Credential) => {
+      return (
+        <TouchableOpacity onPress={() => {}}>
+          <View>
+            <Text style={{ color: isDark ? colors.gray : colors.black }}>{item.docType}</Text>
+            <Text style={{ color: isDark ? colors.gray : colors.black }}>{item.name}</Text>
+            <Text style={{ color: isDark ? colors.gray : colors.black }}>{item.status}</Text>
+            <Text style={{ color: isDark ? colors.gray : colors.black }}>{item.expiryDate}</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    },
+    [isDark],
+  );
+
   return (
     <View style={[styles.root, isDark && { backgroundColor: colors.blackGray }]}>
       <Text style={[styles.title, isDark && { color: colors.gray }]}>Home</Text>
+      <FlatList data={credentials} renderItem={renderItem} keyExtractor={item => item.id} />
       <Button
         title="Go to Details"
         titleStyle={[styles.buttonTitle, isDark && { color: colors.blackGray }]}
