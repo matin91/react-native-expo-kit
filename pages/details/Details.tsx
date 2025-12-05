@@ -49,6 +49,17 @@ export default function Details() {
         }}
         onPress={() => router.back()}
       />
+      <GradientButton
+        title="Go to Details2"
+        titleStyle={[styles.buttonTitle, isDark && { color: colors.blackGray }]}
+        style={[styles.button, { marginTop: 12 }]}
+        gradientBackgroundProps={{
+          colors: [colors.purple, colors.pink],
+          start: { x: 0, y: 1 },
+          end: { x: 0.8, y: 0 },
+        }}
+        onPress={() => router.push({ pathname: './details2', params: { from: 'Details' } })}
+      />
     </View>
   );
 }

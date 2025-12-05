@@ -27,6 +27,7 @@ export default function HomeStackLayout() {
         }}
       />
       <Stack.Screen name="details" options={{ title: 'Details' }} />
+      <Stack.Screen name="details2" options={{ title: 'Details2' }} />
     </Stack>
   );
 }

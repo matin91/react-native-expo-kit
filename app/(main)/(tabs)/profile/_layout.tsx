@@ -27,6 +27,7 @@ export default function ProfileStackLayout() {
         }}
       />
       <Stack.Screen name="details" options={{ title: 'Details' }} />
+      <Stack.Screen name="details2" options={{ title: 'Details2' }} />
     </Stack>
   );
 }
